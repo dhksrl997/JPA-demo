@@ -5,16 +5,16 @@ by jeon-wangi
 */
 
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
-@ToString
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -25,12 +25,19 @@ public class Member {
 
     private int age;
 
-    public Member(String name, int age) {
+    @Embedded
+    private Address address;
+
+    @Column(name = "register_date", nullable = false, updatable = false)
+    private LocalDate registerDate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    private List<Orders> orders = new ArrayList<>();
+
+    public Member(String name, int age, LocalDate registerDate, Address address) {
         this.name = name;
         this.age = age;
-    }
-
-    public Member() {
-
+        this.address = address;
+        this.registerDate = registerDate;
     }
 }

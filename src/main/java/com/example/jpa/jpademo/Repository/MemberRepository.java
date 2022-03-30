@@ -24,4 +24,9 @@ public class MemberRepository {
     public Member find(Long id) {
         return em.find(Member.class, id);
     }
+
+    public void flushEntityManager() {
+        this.em.flush();
+        this.em.clear();
+    }
 }
