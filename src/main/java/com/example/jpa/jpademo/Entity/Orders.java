@@ -37,4 +37,43 @@ public class Orders {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    public Orders(Member member, Delivery delivery, OrderStatus status, LocalDateTime orderDate) {
+        this.member = member;
+        this.delivery = delivery;
+        this.status = status;
+        this.orderDate = orderDate;
+    }
+
+    public void addOrderItems(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+    }
+
+    //생성 메서드
+    public static Orders createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Orders orders = new Orders(member, delivery, OrderStatus.ORDER, LocalDateTime.now());
+        for (OrderItem orderItem : orderItems) {
+            orders.addOrderItems(orderItem);
+        }
+        return orders;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    //주문 취소
+    public void cancle() {
+        if (this.status.equals(DeliveryStatus.COMPLETE)) {
+            throw new IllegalArgumentException("이미 배송된 상품입니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    public int getTotalPrice() {
+        return orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
+    }
 }

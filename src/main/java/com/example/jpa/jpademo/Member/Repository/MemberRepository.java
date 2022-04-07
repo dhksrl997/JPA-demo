@@ -1,4 +1,4 @@
-package com.example.jpa.jpademo.Repository;
+package com.example.jpa.jpademo.Member.Repository;
 /*
 Created on 2022/03/29 8:54 PM In Intelli J IDEA 
 by jeon-wangi

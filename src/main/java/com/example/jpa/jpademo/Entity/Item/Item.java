@@ -5,6 +5,7 @@ by jeon-wangi
 */
 
 import com.example.jpa.jpademo.Entity.Category;
+import com.example.jpa.jpademo.Exception.StockNotEnouthException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +29,16 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
+
+    // 재고 증가
+    public void addStock(int count) {
+        this.stockQuantity += count;
+    }
+
+    public void removeStock(int count) {
+        if (this.stockQuantity - count < 0) {
+            throw new StockNotEnouthException("재고 수량이 부족합니다");
+        }
+        this.stockQuantity -= count;
+    }
 }

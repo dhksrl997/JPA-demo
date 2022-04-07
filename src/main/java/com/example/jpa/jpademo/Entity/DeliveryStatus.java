@@ -5,5 +5,5 @@ by jeon-wangi
 */
 
 public enum DeliveryStatus {
-    COMPLETE, READY,
+    COMPLETE, READY, CANCEL
 }
