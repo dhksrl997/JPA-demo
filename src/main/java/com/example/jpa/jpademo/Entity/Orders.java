@@ -32,7 +32,7 @@ public class Orders {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    @Column(name = "order_date", insertable = false, updatable = false, nullable = false)
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
